@@ -1,12 +1,53 @@
 <?php
 session_start();
-include "database/db.php";
+
+// store popular movie IDs
+$movies = [];
+
+// Get raw popular movie paths from backend endpoint
+$response = file_get_contents("http://localhost/film-website/backend/get_popular_movies.php");
+$data = json_decode($response, true);
+
+// get first 6 movie IDs
+if (is_array($data)) {
+    $moviePaths = array_slice($data, 0, 6);
+
+    foreach ($moviePaths as $path) {
+        if (preg_match('/tt\d+/', $path, $matches)) {
+            $movies[] = $matches[0];
+        }
+    }
+}
+
+/*
+function: getMovieDetails
+purpose: Fetch title and poster for a movie using its movie id
+*/
+function getMovieDetails($movieId) {
+    $curl = curl_init();
+
+    curl_setopt_array($curl, [
+        CURLOPT_URL => "https://online-movie-database.p.rapidapi.com/title/v2/get-overview?tconst=$movieId&country=US&language=en-US",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER => [
+            "x-rapidapi-host: online-movie-database.p.rapidapi.com",
+            "x-rapidapi-key: cf3356ca88msh51f5db0eefae431p19cb45jsnc81b800f8dc8"
+        ],
+    ]);
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+
+    return json_decode($response, true);
+}
 ?>
 
-<h1>Lumiere</h1>
+<h1>Lumiere – Backend Demo</h1>
+
+<hr>
 
 <?php if (isset($_SESSION["username"])): ?>
-    <p>Logged in as <?= htmlspecialchars($_SESSION["username"]) ?></p>
+    <p>Logged in as <strong><?= htmlspecialchars($_SESSION["username"]) ?></strong></p>
     <a href="auth/logout.php">Logout</a>
 <?php else: ?>
     <p>You are not logged in.</p>
@@ -16,11 +57,46 @@ include "database/db.php";
 
 <hr>
 
+<h2>Trending Movies</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap;">
+
+<?php foreach ($movies as $movieId): ?>
+
+<?php
+$details = getMovieDetails($movieId);
+
+$title = $details['data']['title']['titleText']['text'] ?? 'Unknown title';
+$image = $details['data']['title']['primaryImage']['url'] ?? '';
+?>
+
+<div style="width:180px;">
+
+    <?php if ($image): ?>
+        <a href="backend/film_overview.php?id=<?= htmlspecialchars($movieId) ?>">
+            <img src="<?= htmlspecialchars($image) ?>" width="180">
+        </a>
+    <?php endif; ?>
+
+    <p>
+        <a href="backend/film_overview.php?id=<?= htmlspecialchars($movieId) ?>">
+            <?= htmlspecialchars($title) ?>
+        </a>
+    </p>
+
+</div>
+
+<?php endforeach; ?>
+
+</div>
+
+<hr>
+
 <h2>Features</h2>
 
 <ul>
     <li><a href="backend/search_demo.php">Search Movies</a></li>
     <li><a href="backend/genre_demo.php">Browse by Genre</a></li>
-    <li><a href="backend/film_overview.php">Film Overview Demo</a></li>
+    <li><a href="backend/trending_demo.php">Trending / Popular Movies Demo</a></li>
     <li><a href="backend/add_reviews.php">Add Review</a></li>
 </ul>
