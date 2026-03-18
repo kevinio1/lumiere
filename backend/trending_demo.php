@@ -31,17 +31,17 @@ function getMovieDetails($movieId) {
     return json_decode($response, true);
 }
 
-// Get popular movie IDs from backend endpoint
+//popular movie IDs from backend endpoint
 $url = "http://localhost/film-website/backend/get_popular_movies.php";
 $response = file_get_contents($url);
 $data = json_decode($response, true);
 
-// Store returned paths
+//store returned paths
 if (is_array($data)) {
     $moviePaths = array_slice($data, 0, 6);
 }
 
-// Extract IMDb IDs from paths like /title/tt15940132/
+// get movie IDs
 foreach ($moviePaths as $path) {
     if (preg_match('/tt\d+/', $path, $matches)) {
         $movieIds[] = $matches[0];

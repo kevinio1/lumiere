@@ -1,24 +1,23 @@
 <?php
 /*
 
-This endpoint retrieves movies based on a selected genre.
-It sends a request to the RapidAPI advanced search endpoint
-and returns the results as JSON
+This endpoint retrieves movies based on the selected genre;
+sends a request to the 'RapidAPI advanced search' endpoint
+and returns the results as JSON format
 */
 
 header("Content-Type: application/json");
 
-// Get the genre from the URL parameter
-// e.g./search_by_genre.php?genre=Action
+// Get the genre from the URL parameter e.g. search_by_genre.php?genre=Action
 $genre = $_GET['genre'] ?? '';
 
-// If no genre was provided, return an empty JSON response
+// If no genre was provided return empty JSON response
 if ($genre === '') {
     echo json_encode([]);
     exit();
 }
 
-// Initialize cURL request to call the RapidAPI endpoint
+// start cURL request to call RapidAPI endpoint
 $curl = curl_init();
 
 // Configure API request options
@@ -33,20 +32,21 @@ curl_setopt_array($curl, [
 
     // Send search parameters to the API
     CURLOPT_POSTFIELDS => json_encode([
-        "first" => 20,                // Number of results to return
-        "after" => "",                // Used for pagination
+        "first" => 20,
+        // Number of results to return
+        "after" => "",
         "includeReleaseDates" => false,
 
-        // Sort movies by popularity (rating count)
+        // Sort movies by popularity
         "sort" => [
             "sortBy" => "USER_RATING_COUNT",
             "sortOrder" => "DESC"
         ],
 
-        // Filter movies by the selected genre
+        // filter movies by the selected genre
         "allGenreIds" => [$genre],
 
-        // Only return movies (not TV shows or other media types)
+        // only return movies -(not tv shows ect)
         "anyTitleTypeIds" => ["movie"]
     ]),
 
@@ -58,13 +58,13 @@ curl_setopt_array($curl, [
     ],
 ]);
 
-// Execute the API request
+// execute API request
 $response = curl_exec($curl);
 $err = curl_error($curl);
 
 curl_close($curl);
 
-// Return either an error message or the API response
+// return an error message or the API response
 if ($err) {
     echo json_encode(["error" => $err]);
 } else {

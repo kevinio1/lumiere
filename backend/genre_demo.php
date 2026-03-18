@@ -1,24 +1,19 @@
 <?php
 /*
- allows users to browse movies by genre.
-It first calls the backend endpoint search_by_genre.php to retrieve movie IDs.
-Then it fetches detailed movie information (title, poster, year) using the RapidAPI overview endpoint
+ allows users to browse movies by genre
+first it call search_by_genre.php to retrieve movie IDs, then fetches movie info (title, poster, year) using rapidAPI overview endpoint
 */
 
-// Array to store movie results
+//store movie results
 $movies = [];
 
 /*
-Function: getMovieDetails
-
-Purpose:
-Takes a movie ID and sends a request to the RapidAPI endpoint to retrieve detailed information
-about the movie (title, poster, year,..)
+getMovieDetails- takes movie ID and sends request to RapidAPI endpoint to get movie info
 */
 function getMovieDetails($movieId) {
     $curl = curl_init();
 
-    // Configure API request
+    // API request
     curl_setopt_array($curl, [
         CURLOPT_URL => "https://online-movie-database.p.rapidapi.com/title/v2/get-overview?tconst=$movieId&country=US&language=en-US",
         CURLOPT_RETURNTRANSFER => true,
@@ -33,48 +28,38 @@ function getMovieDetails($movieId) {
         ],
     ]);
 
-    // Execute the API request
+    // Execute API request
     $response = curl_exec($curl);
     $err = curl_error($curl);
-
-    // Close cURL connection
     curl_close($curl);
 
-    // If an error occurred, return it
+    // If error occurrs return it
     if ($err) {
         return ["error" => $err];
     }
 
-    // Convert JSON response into a PHP array
+    // convert JSON into PHP array
     return json_decode($response, true);
 }
 
 /*
-Check if the user selected a genre from the URL.
-Example:
-genre_demo.php?genre=Action
+check if user selects genre from url
 */
 if (isset($_GET['genre']) && $_GET['genre'] !== '') {
 
-    // Encode genre for safe use in URL
     $genre = urlencode($_GET['genre']);
 
-    // Call the backend endpoint that retrieves movies by genre
+    // calls the backend endpoint that retrieves movies by genre
     $url = "http://localhost/film-website/backend/search_by_genre.php?genre=" . $genre;
-
-    // Get API response
     $response = file_get_contents($url);
-
-    // Convert JSON response to PHP array
     $data = json_decode($response, true);
 
     /*
-    The API returns movie IDs inside:
-    data -> advancedTitleSearch -> edges
+API returns movie IDs inside data, advancedtitleSearch, edges
     */
     if (isset($data['data']['advancedTitleSearch']['edges'])) {
 
-        // Limit results to first 6 movies for performance
+        // limit results to first 6 movies to improve performance
         $movies = array_slice($data['data']['advancedTitleSearch']['edges'], 0, 6);
     }
 }
@@ -88,35 +73,41 @@ if (isset($_GET['genre']) && $_GET['genre'] !== '') {
     <li><a href="genre_demo.php?genre=Drama">Drama</a></li>
     <li><a href="genre_demo.php?genre=Sci-Fi">Sci-Fi</a></li>
 </ul>
-
+<?php if (isset($_GET['genre']) && $_GET['genre'] !== ''): ?>
+    <h2>
+        Popular <strong><?= htmlspecialchars($_GET['genre']) ?></strong> Movies:
+    </h2>
+<?php else: ?>
+    <h2>Select a genre</h2>
+<?php endif; ?>
 <hr>
 
 <?php
-// Loop through the movies returned from the genre search
+// loop through the movies returned from the genre search
 ?>
 
 <?php foreach ($movies as $movie): ?>
 
 <?php
-// Extract IMDb movie ID from the API response
+// get movie ID from the API response
 $movieId = $movie['node']['title']['id'] ?? '';
 
-// Skip if no movie ID was found
+// skip if no movie ID was found
 if ($movieId === '') {
     continue;
 }
 
-// Fetch detailed information for this movie
+// get movie details
 $details = getMovieDetails($movieId);
 
-// Handle API errors
+// handle API errors
 if (isset($details['error'])) {
     $title = 'Error loading movie';
     $year = 'N/A';
     $image = '';
 } else {
 
-    // Extract movie information from API response
+    // get movie info from API
     $title = $details['data']['title']['titleText']['text'] ?? 'Unknown title';
     $year = $details['data']['title']['releaseYear']['year'] ?? 'N/A';
     $image = $details['data']['title']['primaryImage']['url'] ?? '';
@@ -125,7 +116,7 @@ if (isset($details['error'])) {
 
 <div style="margin-bottom:20px;">
 
-    <!-- Display movie poster if available -->
+    <!-- display movie poster  -->
     <?php if ($image): ?>
         <a href="film_overview.php?id=<?= htmlspecialchars($movieId) ?>">
             <img src="<?= htmlspecialchars($image) ?>" width="120">
@@ -139,11 +130,9 @@ if (isset($details['error'])) {
         </a>
     </h3>
 
-    <!-- Display movie release year -->
+    <!-- display movie release year -->
     <p>Year: <?= htmlspecialchars((string)$year) ?></p>
 
-    <!-- Display IMDb movie ID (used for API requests) -->
-    <p>Movie ID: <?= htmlspecialchars($movieId) ?></p>
 
 </div>
 

@@ -1,6 +1,5 @@
 <?php
-// This file sends a request to the RapidAPI movie autocomplete endpoint
-// It returns a list of films based on the user's search query
+// sends request to the RapidAPI movie autocomplete endpoint, returns list of films based on the users search
 
 header("Content-Type: application/json");
 
@@ -11,8 +10,6 @@ if ($query === '') {
     echo json_encode([]);
     exit();
 }
-
-// Initialize cURL request
 $curl = curl_init();
 
 // Configure API request options
@@ -30,14 +27,11 @@ curl_setopt_array($curl, [
     ],
 ]);
 
-// Execute API request
 $response = curl_exec($curl);
 $err = curl_error($curl);
-
-// Close cURL connection
 curl_close($curl);
 
-// Return either an error or the API response
+// return either error or the api response
 if ($err) {
     echo json_encode(["error" => $err]);
 } else {

@@ -1,17 +1,11 @@
-/*
-//File: film_overview.php
-Purpose: Displays detailed information about a movie including title,
-poster, year and description using rapidAPI.
-*/
 <?php
-// Get the movie ID from the URL parameter
-// If none is provided, default to Titanic
+// get movie ID from the URL parameter
 $movie_id = $_GET['id'] ?? 'tt0120338';
 
-// Initialize a cURL request to call the IMDb RapidAPI
+// start curl request to call RapidAPI
 $curl = curl_init();
 
-// Configure the API request settings
+// configure the API request settings
 curl_setopt_array($curl, [
     CURLOPT_URL => "https://online-movie-database.p.rapidapi.com/title/v2/get-overview?tconst=$movie_id&country=US&language=en-US",
     CURLOPT_RETURNTRANSFER => true,
@@ -26,39 +20,67 @@ curl_setopt_array($curl, [
     ],
 ]);
 
-// Execute the API request
+//start API request
 $response = curl_exec($curl);
 $err = curl_error($curl);
-
-// Close the cURL connection
 curl_close($curl);
 
-// If an error occurred, display it
+// display if error occurs
 if ($err) {
     echo "cURL Error #: " . $err;
     exit();
 }
-
-// Convert the JSON API response into a PHP array
 $data = json_decode($response, true);
 
-// Extract movie information from the response
+// Extract movie information from the JSON response
 $title = $data['data']['title']['titleText']['text'] ?? 'Unknown title';
 $year = $data['data']['title']['releaseYear']['year'] ?? 'N/A';
 $image = $data['data']['title']['primaryImage']['url'] ?? '';
 $plot = $data['data']['title']['plot']['plotText']['plainText'] ?? 'No description available';
 ?>
 
-<!-- Display the movie title -->
 <h1><?= htmlspecialchars($title) ?></h1>
 
-<!-- Display movie poster if available -->
 <?php if ($image): ?>
     <img src="<?= htmlspecialchars($image) ?>" width="250"><br><br>
 <?php endif; ?>
 
-<!-- Display release year -->
 <strong>Year:</strong> <?= htmlspecialchars((string)$year) ?><br><br>
 
-<!-- Display movie description -->
 <p><?= htmlspecialchars($plot) ?></p>
+
+<?php
+// Fetch reviews for movie
+$reviewsUrl = "http://localhost/film-website/backend/get_reviews.php?movie_id=" . urlencode($movie_id);
+$reviewsResponse = file_get_contents($reviewsUrl);
+$reviews = json_decode($reviewsResponse, true);
+?>
+
+<hr>
+
+<h2>Reviews</h2>
+
+<?php if (!empty($reviews)): ?>
+    <?php foreach ($reviews as $review): ?>
+        <div style="margin-bottom:20px;">
+            <strong><?= htmlspecialchars($review['username']) ?></strong><br>
+            <p><?= htmlspecialchars($review['comment_text']) ?></p>
+            <small><?= htmlspecialchars($review['created_at']) ?></small>
+        </div>
+        <hr>
+    <?php endforeach; ?>
+<?php else: ?>
+    <p>No reviews yet.</p>
+<?php endif; ?>
+<hr>
+
+<h2>Add a Review</h2>
+
+<form method="POST" action="add_reviews.php">
+    <input type="hidden" name="movie_id" value="<?= htmlspecialchars($movie_id) ?>">
+    <input type="hidden" name="movie_title" value="<?= htmlspecialchars($title) ?>">
+
+    <textarea name="comment_text" placeholder="Write your review here..." required></textarea><br><br>
+
+    <button type="submit">Submit Review</button>
+</form>

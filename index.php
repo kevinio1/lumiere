@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-// store popular movie IDs
+// Store popular movie IDs
 $movies = [];
 
-// Get raw popular movie paths from backend endpoint
+// get popular movie paths from backend endpoint
 $response = file_get_contents("http://localhost/film-website/backend/get_popular_movies.php");
 $data = json_decode($response, true);
 
-// get first 6 movie IDs
+// Extract first 6 movie IDs
 if (is_array($data)) {
     $moviePaths = array_slice($data, 0, 6);
 
@@ -20,8 +20,8 @@ if (is_array($data)) {
 }
 
 /*
-function: getMovieDetails
-purpose: Fetch title and poster for a movie using its movie id
+Function: getMovieDetails
+used to fetch title and poster for a movie using its movie IDs
 */
 function getMovieDetails($movieId) {
     $curl = curl_init();
@@ -42,7 +42,7 @@ function getMovieDetails($movieId) {
 }
 ?>
 
-<h1>Lumiere – Backend Demo</h1>
+<h1>Lumiere</h1>
 
 <hr>
 
@@ -54,6 +54,15 @@ function getMovieDetails($movieId) {
     <a href="auth/login.php">Login</a><br>
     <a href="auth/register.php">Register</a>
 <?php endif; ?>
+
+<hr>
+
+<h2>Search Movies</h2>
+
+<form method="GET" action="backend/search_demo.php">
+    <input type="text" name="q" placeholder="Search for a movie..." required>
+    <button type="submit">Search</button>
+</form>
 
 <hr>
 
@@ -92,11 +101,22 @@ $image = $details['data']['title']['primaryImage']['url'] ?? '';
 
 <hr>
 
-<h2>Features</h2>
+<h2>Browse by Genre</h2>
 
 <ul>
-    <li><a href="backend/search_demo.php">Search Movies</a></li>
-    <li><a href="backend/genre_demo.php">Browse by Genre</a></li>
+    <li><a href="backend/genre_demo.php?genre=Action">Action</a></li>
+    <li><a href="backend/genre_demo.php?genre=Comedy">Comedy</a></li>
+    <li><a href="backend/genre_demo.php?genre=Drama">Drama</a></li>
+    <li><a href="backend/genre_demo.php?genre=Sci-Fi">Sci-Fi</a></li>
+</ul>
+
+<hr>
+
+<h2>Other Features</h2>
+
+<ul>
+    <li><a href="backend/search_demo.php">Search Movies Demo</a></li>
+    <li><a href="backend/genre_demo.php">Browse by Genre Demo</a></li>
     <li><a href="backend/trending_demo.php">Trending / Popular Movies Demo</a></li>
     <li><a href="backend/add_reviews.php">Add Review</a></li>
 </ul>

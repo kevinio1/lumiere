@@ -2,22 +2,18 @@
 /*
 
 
-Purpose:
-This page allows users to search for movies.
-It sends the search query to search_films.php which calls rapidAPI
-The results are then displayed with title, poster, year and movie ID.
+allows users to search for movies; sends search query to search_films.php which then calls rapidAPI
+The results are then displayed with title, poster, year ect
 */
 
-// Array to store movie results
+// store movie results
 $movies = [];
 
-// Check if the user entered a search query
+// check if the user entered a search query
 if (isset($_GET['q']) && $_GET['q'] !== '') {
 
-    // Encode the search query for safe use in a URL
+    // Encode the search query for safe use in url
     $query = urlencode($_GET['q']);
-
-    // Call the backend search API endpoint
     $url = "http://localhost/film-website/backend/search_films.php?q=" . $query;
 
     // Get the JSON response from the API
@@ -35,7 +31,7 @@ if (isset($_GET['q']) && $_GET['q'] !== '') {
 
 <h1>Search Movies</h1>
 
-<!-- Search form for entering movie titles -->
+<!-- search form for entering movie titles -->
 <form method="GET">
     <input type="text" name="q" placeholder="Search movie..." required>
     <button type="submit">Search</button>
@@ -44,24 +40,23 @@ if (isset($_GET['q']) && $_GET['q'] !== '') {
 <hr>
 
 <?php
-// Loop through all movies returned from the API
 // RapidAPI uses short field names:
-// l = title
-// y = release year
-// i.imageUrl = poster image
-// id = IMDb movie ID
+// l =title
+// y =release year
+// i.imageUrl =poster image
+// id =movie ID
 ?>
 
 <?php foreach ($movies as $movie): ?>
 
 <div style="margin-bottom:20px;">
 
-<!-- Display movie poster if available -->
+<!-- display the movie poster if available -->
 <?php if(isset($movie['i']['imageUrl'])): ?>
 <img src="<?= $movie['i']['imageUrl'] ?>" width="120">
 <?php endif; ?>
 
-<!-- Movie title linking to the film overview page -->
+<!-- movie title linking to film overview -->
 <h3>
     <a href="film_overview.php?id=<?= $movie['id'] ?>">
         <?= $movie['l'] ?? "Unknown title" ?>
@@ -71,7 +66,7 @@ if (isset($_GET['q']) && $_GET['q'] !== '') {
 <!-- Display movie release year -->
 <p>Year: <?= $movie['y'] ?? "N/A" ?></p>
 
-<!-- Display IMDb movie ID (used to fetch detailed movie information) -->
+<!-- display movie ID (can be used to fetch further movie info) -->
 <p>Movie ID: <?= $movie['id'] ?? "" ?></p>
 
 </div>
