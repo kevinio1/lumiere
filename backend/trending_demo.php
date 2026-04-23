@@ -48,7 +48,7 @@ foreach ($moviePaths as $path) {
     }
 }
 ?>
-
+<?php include "../includes/navbar.php"; ?>
 <h1>Trending / Popular Movies</h1>
 <hr>
 

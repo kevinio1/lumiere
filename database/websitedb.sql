@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2026 at 09:30 PM
+-- Generation Time: Apr 23, 2026 at 12:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,7 +43,10 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`id`, `username`, `comment_text`, `created_at`, `users_id`, `movie_id`, `movie_title`) VALUES
 (1, 'awa', 'rlly good', '2026-03-11 14:40:19', 5, 'tt0120338', 'Titanic'),
-(2, 'awa', 'amazin', '2026-03-11 19:41:57', 5, 'tt0120338', 'Titanic');
+(2, 'awa', 'amazin', '2026-03-11 19:41:57', 5, 'tt0120338', 'Titanic'),
+(3, 'awa', 'hi', '2026-03-18 18:30:39', 5, 'tt0120338', 'Titanic'),
+(4, 'awa', 'amazeballs', '2026-03-18 18:46:26', 5, 'tt0120338', 'Titanic'),
+(5, 'awa', 'hi', '2026-03-21 17:43:36', 5, 'tt12042730', 'Project Hail Mary');
 
 -- --------------------------------------------------------
 
@@ -70,6 +73,27 @@ INSERT INTO `users` (`id`, `username`, `pswd`, `email`, `created_at`) VALUES
 (4, 'u2367783@unimail.hud.ac.uk', '$2y$10$B5W1u8AaDgMoqp/a6l50BuXux6BZIjUNvTxEFHxZ2YqB9yZanMmQ6', 'u2367783@unimail.hud.ac.uk', '2026-03-08 19:09:11'),
 (5, 'awa', '$2y$10$k.qXXhV/Xkk5R3PJ06fG4.TBdcH6hmuq3N5TGHef1cHH4hL5KYKIe', 'awa@gmail.com', '2026-03-08 19:09:51');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `watchlist`
+--
+
+CREATE TABLE `watchlist` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `movie_id` varchar(20) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `watchlist`
+--
+
+INSERT INTO `watchlist` (`id`, `user_id`, `movie_id`, `created_at`) VALUES
+(1, 5, 'tt26443597', '2026-03-22 11:15:07'),
+(2, 5, 'tt15940132', '2026-03-22 11:16:10');
+
 --
 -- Indexes for dumped tables
 --
@@ -89,6 +113,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `id` (`id`,`username`,`pswd`,`email`,`created_at`);
 
 --
+-- Indexes for table `watchlist`
+--
+ALTER TABLE `watchlist`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -96,13 +126,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `watchlist`
+--
+ALTER TABLE `watchlist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

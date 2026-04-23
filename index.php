@@ -4,7 +4,7 @@ session_start();
 // Store popular movie IDs
 $movies = [];
 
-// get popular movie paths from backend endpoint
+// Get popular movie paths from backend endpoint
 $response = file_get_contents("http://localhost/film-website/backend/get_popular_movies.php");
 $data = json_decode($response, true);
 
@@ -21,7 +21,7 @@ if (is_array($data)) {
 
 /*
 Function: getMovieDetails
-used to fetch title and poster for a movie using its movie IDs
+Used to fetch title and poster for a movie using its movie ID
 */
 function getMovieDetails($movieId) {
     $curl = curl_init();
@@ -41,6 +41,8 @@ function getMovieDetails($movieId) {
     return json_decode($response, true);
 }
 ?>
+
+<?php include "includes/navbar.php"; ?>
 
 <h1>Lumiere</h1>
 
@@ -63,6 +65,8 @@ function getMovieDetails($movieId) {
     <input type="text" name="q" placeholder="Search for a movie..." required>
     <button type="submit">Search</button>
 </form>
+
+<p><a href="backend/watchlist.php">My Watchlist</a></p>
 
 <hr>
 
@@ -110,13 +114,3 @@ $image = $details['data']['title']['primaryImage']['url'] ?? '';
     <li><a href="backend/genre_demo.php?genre=Sci-Fi">Sci-Fi</a></li>
 </ul>
 
-<hr>
-
-<h2>Other Features</h2>
-
-<ul>
-    <li><a href="backend/search_demo.php">Search Movies Demo</a></li>
-    <li><a href="backend/genre_demo.php">Browse by Genre Demo</a></li>
-    <li><a href="backend/trending_demo.php">Trending / Popular Movies Demo</a></li>
-    <li><a href="backend/add_reviews.php">Add Review</a></li>
-</ul>

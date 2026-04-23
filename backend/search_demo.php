@@ -28,7 +28,7 @@ if (isset($_GET['q']) && $_GET['q'] !== '') {
     }
 }
 ?>
-
+<?php include "../includes/navbar.php"; ?>
 <h1>Search Movies</h1>
 
 <!-- search form for entering movie titles -->
