@@ -1,0 +1,425 @@
+body {
+    background-color: black;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background:
+        radial-gradient(circle at top right, rgba(79,0,120,0.3), transparent 40%),
+        linear-gradient(to bottom, #050608, #000);
+}
+
+ NAVBAR
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: linear-gradient(90deg, #000, #170028);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+LEFT SIDE 
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    height: 45px;
+    width:auto;
+}
+
+.brand {
+    font-size: 20px;
+    color: #f2d151;
+    font-weight: bold;
+}
+
+ NAV LINKS 
+nav {
+    display: flex;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #f2d151;
+}
+
+
+.site-header {
+    background: linear-gradient(90deg, #050505, #170028, #050505);
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+    padding: 18px 40px 14px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.45);
+}
+
+.brand-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.logo {
+    height: 42px;
+    width: auto;
+}
+
+.brand-title {
+    margin: 0;
+    font-size: 34px;
+    color: #f2d151;
+    letter-spacing: 1px;
+    text-shadow: 0 0 12px rgba(242,209,81,0.45);
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.main-nav a:hover {
+    color: #f2d151;
+    background: rgba(255,255,255,0.08);
+}
+
+
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    background:
+        radial-gradient(circle at top right, rgba(87, 0, 140, 0.35), transparent 35%),
+        linear-gradient(180deg, #09060f, #000);
+}
+
+main,
+section {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+a {
+    color: #f2d151;
+    text-decoration: none;
+}
+
+.site-header {
+    background: linear-gradient(90deg, #050505, #170028, #050505);
+    padding: 24px 40px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.brand-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.logo {
+    height: 46px;
+    width: auto;
+}
+
+.brand-title {
+    margin: 0;
+    color: #f2d151;
+    font-size: 38px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 16px rgba(242,209,81,0.5);
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    flex-wrap: wrap;
+}
+
+.main-nav a {
+    color: white;
+    font-weight: bold;
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+
+.main-nav a:hover {
+    color: #f2d151;
+    background: rgba(255,255,255,0.08);
+}
+
+.login-panel {
+    margin-top: 30px;
+    padding: 28px;
+    background: rgba(18, 10, 32, 0.75);
+    border: 1px solid rgba(242,209,81,0.18);
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+}
+
+.search-section,
+.genre-section {
+    margin-top: 34px;
+}
+
+.search-form {
+    display: flex;
+    gap: 12px;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: #100c18;
+    color: white;
+}
+
+.search-form button,
+.btn-primary {
+    background: linear-gradient(135deg, #f2d151, #9b5cff);
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 14px 22px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.btn-outline {
+    display: inline-block;
+    margin-left: 10px;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 12px 20px;
+    border-radius: 12px;
+}
+
+.genre-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.genre-grid a {
+    color: white;
+    padding: 13px 24px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(242,209,81,0.2);
+}
+
+.genre-grid a:hover {
+    background: rgba(242,209,81,0.16);
+    color: #f2d151;
+}
+
+h1, h2 {
+    color: white;
+}
+
+img {
+    border-radius: 12px;
+}
+
+
+ CENTER PAGE 
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+ LOGIN BOX 
+.auth-box {
+    background: rgba(0, 0, 0, 0.85);
+    padding: 40px;
+    width: 320px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(128, 0, 255, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+ TITLE 
+.auth-box h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+ INPUTS 
+.auth-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+}
+
+ BUTTON 
+.auth-box button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, purple, violet);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+ HOVER 
+.auth-box button:hover {
+    opacity: 0.9;
+}
+
+ MESSAGE 
+.auth-message {
+    color: #ff6b6b;
+    margin-bottom: 10px;
+}
+
+ REGISTER LINK 
+.auth-link {
+    margin-top: 15px;
+    color: #ccc;
+}
+
+.auth-link a {
+    color: violet;
+    text-decoration: none;
+}
+
+.film-page {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 40px 30px;
+}
+
+.film-hero {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 35px;
+    padding: 32px;
+    border-radius: 22px;
+    background: rgba(18, 10, 32, 0.82);
+    border: 1px solid rgba(242, 209, 81, 0.18);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+}
+
+.film-poster img {
+    width: 100%;
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.55);
+}
+
+.film-info h1 {
+    color: #f2d151;
+    font-size: 38px;
+    margin: 0 0 12px;
+}
+
+.film-year {
+    color: #cfc7da;
+    font-weight: bold;
+}
+
+.film-plot {
+    color: white;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.film-info button,
+.review-form button {
+    background: linear-gradient(135deg, #f2d151, #9b5cff);
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.reviews-section,
+.add-review-section {
+    margin-top: 35px;
+    padding: 28px;
+    background: rgba(10, 10, 15, 0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+}
+
+.reviews-section h2,
+.add-review-section h2 {
+    color: #f2d151;
+    margin-top: 0;
+}
+
+.review-card {
+    margin-bottom: 18px;
+    padding: 18px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.review-card strong {
+    color: #f2d151;
+}
+
+.review-card p {
+    color: white;
+}
+
+.review-card small,
+.empty-message {
+    color: #cfc7da;
+}
+
+.review-form textarea {
+    width: 100%;
+    min-height: 130px;
+    padding: 15px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: #100c18;
+    color: white;
+    resize: vertical;
+    margin-bottom: 15px;
+}
+
+.btn-outline {
+    display: inline-block;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 12px 20px;
+    border-radius: 12px;
+}
